@@ -1,2 +1,2 @@
 # Ambula
-An application used to promote Srilankan food culture using MongoDB, Express, React and NodeJs
+Ambula - A Mobile Application Solution to Promote Sri Lankan Food Culture using MongoDB, Express, React and NodeJs
