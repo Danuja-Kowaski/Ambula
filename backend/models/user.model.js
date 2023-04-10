@@ -1,5 +1,6 @@
 //Modal for user
 const mongoose = require('mongoose');
+const FoodInfo = require('./foodinfo.model')
 const userSchema = new mongoose.Schema({
     username : {
         type: String,
@@ -16,7 +17,11 @@ const userSchema = new mongoose.Schema({
     },
     user_type : {
         type: String
-    }
+    },
+    food_info: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'FoodInfo'
+      }],
 })
 
 const User = mongoose.model('User', userSchema);

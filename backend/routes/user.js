@@ -1,9 +1,7 @@
 const router = require('express').Router();
-//import model
 const User = require('../models/user.model');
 
-//register user to db
-
+//Register user to db
 router.post('/api/auth/register', async (req, res) => {
     try{
         const body = req.body;
@@ -19,7 +17,7 @@ router.post('/api/auth/register', async (req, res) => {
     }
 })
 
-//login user
+//Login user
 router.post('/api/auth/login', async (req, res) => {
     try{
         const body = req.body;
@@ -39,26 +37,50 @@ router.post('/api/auth/login', async (req, res) => {
     }
 })
 
-//get all users
+//Get all users
 router.get('/api/users', async (req, res) =>{
     try{
         const allUsers = await User.find({});
-        console.log(allUsers)
-        res.status(200).json(allUsers)
+        if (allUsers){
+            res.status(200).json(allUsers)
+        }
+        res.status(400).send({ message : "No user data" })
+        
     }catch(err){
         res.json(err);
     }
 })
 
-//Get details by userID
+//Get details of a user by Id
 router.get('/api/users/:id', async (req, res) =>{
     try{
-        const test = await User.findById(req.params.id);
-        console.log(test)
-        res.status(200).json(test)
+        const User = await User.findById(req.params.id);
+        if(User){
+            res.status(200).json(User)
+        }
     }catch(err){
         res.json(err);
     }
 })
-
+//Update user details using Id
+router.put('/api/user/:id', async (req, res) => {
+    try{
+        const updateUser =  await User.findByIdAndUpdate(req.params.id, {$set : req.body});
+        res.status(200).json('User updated');
+    }catch(err){
+        res.json(err);
+    }
+})
+//Delete user details using Id
+router.delete('/api/delfood/:id', async (req, res) => {
+    try{
+        const deleteUser = await User.findByIdAndDelete(req.params.id);
+        console.log(deleteUser)
+        if(deleteUser){
+            res.status(200).json(deleteUser)
+        }
+    }catch(err){
+        res.json(err);
+    }  
+})
 module.exports = router;
